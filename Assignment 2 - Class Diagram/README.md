@@ -101,7 +101,7 @@ Lalu di `Costumer` dan `Admin` di-override menjadi:
     }
 ``````
  - Polymorphism pada interface Metode Pembayaran
-   Interface MetodePembayaran memiliki beberapa implementasi yaitu Tunai dan EWallet.
+   Interface MetodePembayaran memiliki beberapa implementasi yaitu `Tunai` dan `EWallet`.
 Saat `metodePembayaran.bayar(harga)` dipanggil, Java otomatis menjalankan versi yang benar berdasarkan objek aslinya 
  - Polymorphism pada interface Tipe Olahraga
 Interface `TipeOlahraga` memungkinkan sistem mendukung berbagai jenis olahraga tanpa mengubah class `Field`. `Basket`, `Badminton`, dan `Voli` dapat memanggil method yang sama yaitu `getNamaOlahraga()` dengan isi kode yang berbeda.
@@ -150,7 +150,7 @@ class EWallet implements MetodePembayaran {
 ### Composition
 Composition terjadi ketika suatu class memiliki object lain yang dibuat di dalam class tersebut, sehingga siklus hidupnya bergantung pada class utama. Pada sistem ini:
 - class `Reservasi` memiliki `Jadwal`
-- class `Reservasi` memiliki `Pembayaran`
+- class `Reservasi` memiliki `Pembayaran` <br>
 Object `Jadwal` dan `Pembayaran` dibuat di dalam constructor `Reservasi`. <br>
 Jika Reservasi dihapus, maka `Jadwal` dan `Pembayaran` juga ikut hilang.
 ``````java
