@@ -48,7 +48,7 @@ interface MetodePembayaran {
     void bayar(int harga); // belum ada implementasi 
 }
 ``````
-###Encapsulation
+## Encapsulation
 Encapsulation adalah membungkus data dan mengontrol akses terhadap data tersebut, dimana akses data hanya lewat method getter/setter. Contoh penerapannya ialah 
 ``````java
 class Field {
@@ -147,7 +147,25 @@ class EWallet implements MetodePembayaran {
     }
 }
 ``````
+### Composition
+Composition terjadi ketika suatu class memiliki object lain yang dibuat di dalam class tersebut, sehingga siklus hidupnya bergantung pada class utama. Pada sistem ini:
+- class Reservasi memiliki Jadwal
+- class Reservasi memiliki Pembayaran
+Object Jadwal dan Pembayaran dibuat di dalam constructor Reservasi. <br>
+Jika Reservasi dihapus, maka Jadwal dan Pembayaran juga ikut hilang.
+``````java
+class Reservasi {
+    private Jadwal jadwal;         // Reservasi PUNYA Jadwal
+    private Pembayaran pembayaran; // Reservasi PUNYA Pembayaran
 
+    public Reservasi(...) {
+        this.jadwal = new Jadwal(...);       // Object Jadwal dibuat di sini
+        this.pembayaran = new Pembayaran(...); // Object Pembayaran dibuat di sini
+    }
+}
+``````
+### Association 
+Association adalah hubungan antar class dimana satu class mengetahui class lain, tetapi keduanya tetap dapat berdiri sendiri.
 ## Keunikan
 1. oca
 2. ads
