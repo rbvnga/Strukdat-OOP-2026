@@ -261,5 +261,5 @@ Implementasi pada kode:
    - Customer melakukan pembayaran
    - Memperbarui status pembayaran 
 4. Fleksibilitas metode pembayaran mencerminkan kebiasaan masyarakat modern <br>
-Di jaman sekarang ini, orang tidak selalu membayar dengan cara yang sama, ada yang lebih nyaman cash, lebih nyaman e-wallet terutama para anak muda. Dengan penggunaan interface untuk `Metode Pembayaran` sistem dapat dikembangkan sesuai dengan kebiasaan pembayaran masa kini.
+Di jaman sekarang ini, orang tidak selalu membayar dengan cara yang sama, ada yang lebih nyaman cash ataupun lebih nyaman e-wallet terutama para anak muda. Dengan penggunaan interface untuk `Metode Pembayaran` sistem dapat dikembangkan sesuai dengan kebiasaan pembayaran masa kini.
 
