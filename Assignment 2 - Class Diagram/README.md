@@ -68,7 +68,7 @@ class Pembayaran {
 ``````
 Karena `hargaPerJam` dan `status` bersifat `private`, property ini tidak bisa diakses langsung dari luar class, aksesnya harus lewat method getter/setter. <br>
 ### Inheritance 
-Class `User` menjadi _parent class_ yang memiliki atribut umum berupa `userId`, `nama`, dan `email`. Class `Admin` dan `Customer` merupakan turunan dari Class **User**, sehingga keduanya mewarisi atribut dan method yang sama yaitu `login()`. 
+Class `User` menjadi _parent class_ yang memiliki atribut umum berupa `userId`, `nama`, dan `email`. Class `Admin` dan `Customer` merupakan turunan dari Class `User` (_Child Class_), sehingga keduanya mewarisi atribut dan method yang sama yaitu `login()`. Inheritance digunakan untuk membuat struktur class yang lebih rapi dan menghindari duplikasi kode.
 <pre>
 User (parent)
  ├── Admin (child)
@@ -84,10 +84,69 @@ class Admin extends User { ... }
 ``````
 
  ### Polymorphism
+Polymorphism adalah konsep dimana method yang sama bisa punya implementasi berbeda pada class yang berbeda. <br>
  - Polymorphism pada method abstract
- - Polymorphism pada metode pembayaran
-   Interface MetodePembayaran memiliki beberapa implementasi yaitu Tunai dan EWallet
- - Polymorphism pada tipe olahraga
+``````java
+abstract void login();
+``````
+Lalu di `Costumer` dan `Admin` di-override menjadi:
+``````java
+    @Override
+    public void login() {
+        System.out.println("(Customer) " + nama + " Login");
+    }
+    @Override
+    public void login() {
+        System.out.println("(Admin) " + nama + " Login");
+    }
+``````
+ - Polymorphism pada interface Metode Pembayaran
+   Interface MetodePembayaran memiliki beberapa implementasi yaitu Tunai dan EWallet.
+Saat `metodePembayaran.bayar(harga) dipanggil`, Java otomatis menjalankan versi yang benar berdasarkan objek aslinya 
+ - Polymorphism pada interface Tipe Olahraga
+Interface `TipeOlahraga` memungkinkan sistem mendukung berbagai jenis olahraga tanpa mengubah class `Field`. `Basket`, `Badminton`, dan `Voli` dapat memanggil method yang sama yaitu `getNamaOlahraga()` dengan isi kode yang berbeda.
+``````java
+public class App{
+public static void main(String[] args) throws Exception {
+TipeOlahraga badminton = new Badminton(); // bentuk: Badminton
+TipeOlahraga basket    = new Basket();    // bentuk: Basket
+MetodePembayaran bayarEWallet = new EWallet(); // bentuk: EWallet
+}
+}
+
+interface TipeOlahraga {
+    String getNamaOlahraga();
+}
+class Badminton implements TipeOlahraga {
+    @Override
+    public String getNamaOlahraga() {
+        return "Badminton";
+    }
+}
+class Basket implements TipeOlahraga {
+    @Override
+    public String getNamaOlahraga() {
+        return "Basket";
+    }
+}
+
+interface MetodePembayaran {
+    void bayar(int harga);
+}
+class Tunai implements MetodePembayaran {
+    @Override
+    public void bayar(int harga) {
+        System.out.println("Bayar Cash Sebesar Rp " + harga);
+    }
+}
+class EWallet implements MetodePembayaran {
+    @Override
+    public void bayar(int harga) {
+        System.out.println("Bayar melalui e-wallet sebesar Rp " + harga);
+
+    }
+}
+``````
 
 ## Keunikan
 1. oca
