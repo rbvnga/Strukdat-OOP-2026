@@ -192,7 +192,7 @@ class Reservasi {
     public Reservasi(String reservasiId, Customer customer, Field lapangan, String tanggal, String waktuMulai, String waktuBerakhir, MetodePembayaran metodePembayaran) {...}
 }
 ``````
-`Reservasi` hanya meminjam referensi `Customer` untuk keperluan menampilkan nama dan email di `detailReservasi()`. Customer dapat membuat banyak reservasi, tetapi Customer tetap dapat ada tanpa reservasi.
+`Reservasi` hanya meminjam referensi `Customer` untuk keperluan menampilkan nama dan email di `detailReservasi()`. Customer dapat membuat banyak reservasi, tetapi Customer tetap dapat ada tanpa reservasi. <br>
 2. Reservasi — Field
 ``````java
 class Reservasi {
@@ -207,8 +207,8 @@ admin1.tambahLapangan(lapangan1);
 // Field (lapangan1)  dikirim ke Reservasi:
 Reservasi r1 = c1.buatReservasi("r1", lapangan1, ...);
 ``````
-`Reservasi` menggunakan `Field` digunakan mengambil `hargaPerJam` saat menghitung total biaya, dan menampilkan info lapangan di `detailReservasi()`. `Field` tetap hidup meski Reservasi dihapus.
-4. Field — TipeOlahraga
+`Reservasi` menggunakan `Field` digunakan mengambil `hargaPerJam` saat menghitung total biaya, dan menampilkan info lapangan di `detailReservasi()`. `Field` tetap hidup meski Reservasi dihapus. <br>
+5. Field — TipeOlahraga
 ``````java
 class Field {
     private TipeOlahraga namaOlahraga; // menyimpan referensi TipeOlahraga
@@ -220,8 +220,8 @@ class Field {
 TipeOlahraga badminton = new Badminton(); 
 Field lapangan1 = new Field("F01", badminton, 50000); // TipeOlahraga (badminton) dikirim ke Field
 ``````
-`Field` menggunakannya hanya untuk memanggil `getNamaOlahraga()` di method `getFieldInfo()`.
-5. Pembayaran — MetodePembayaran
+`Field` menggunakannya hanya untuk memanggil `getNamaOlahraga()` di method `getFieldInfo()`. <br>
+4. Pembayaran — MetodePembayaran
 `````java
 class Pembayaran {
     private MetodePembayaran metodePembayaran; // menyimpan referensi MetodePembayaran
@@ -234,12 +234,12 @@ MetodePembayaran bayarEWallet = new EWallet();
 // dikirim ke buatReservasi() → ke konstruktor Reservasi → ke konstruktor Pembayaran:
 c1.buatReservasi("r1", lapangan1, "10-01-2026", "10:00", "12:00", bayarEWallet);
 ``````
-saat `prosesPembayaran` di panggil di `main()`, objek `pembayaran` akan memanggil method `bayar()`. Saat method `pembayaran.bayar()` dipanggil, dia mendelegasikan ke `metodePembayaran.bayar(harga)`, tanpa peduli apakah itu `EWallet` atau `Tunai`
+saat `prosesPembayaran` di panggil di `main()`, objek `pembayaran` akan memanggil method `bayar()`. Saat method `pembayaran.bayar()` dipanggil, dia mendelegasikan ke `metodePembayaran.bayar(harga)`, tanpa peduli apakah itu `EWallet` atau `Tunai`. <br>
 
 ## Keunikan
-1. Menggunakan Composition pada Jadwal dan Pembayaran
-Class Reservasi langsung membuat object Jadwal dan Pembayaran di dalam constructor, sehingga struktur data reservasi menjadi lebih rapi dan terikat kuat. Hal ini memastikan bahwa setiap reservasi pasti memiliki jadwal dan informasi pembayaran.
-2. Perhitungan Otomatis Total Harga Berdasarkan Durasi
+1. Menggunakan Composition pada Jadwal dan Pembayaran <br>
+Class Reservasi langsung membuat object Jadwal dan Pembayaran di dalam constructor, sehingga struktur data reservasi menjadi lebih rapi dan terikat kuat. Hal ini memastikan bahwa setiap reservasi pasti memiliki jadwal dan informasi pembayaran. <br>
+2. Perhitungan Otomatis Total Harga Berdasarkan Durasi <br>
 Durasi pemakaian lapangan dihitung otomatis dari waktu mulai dan waktu selesai. Kemudian total harga dihitung menggunakan rumus:
 <pre> total harga = harga per jam × durasi </pre>
 Implementasi pada kode: 
@@ -260,6 +260,6 @@ Implementasi pada kode:
    - Sistem menghitung biaya otomatis
    - Customer melakukan pembayaran
    - Memperbarui status pembayaran 
-4. Fleksibilitas metode pembayaran mencerminkan kebiasaan masyarakat modern
+4. Fleksibilitas metode pembayaran mencerminkan kebiasaan masyarakat modern <br>
 Di jaman sekarang ini, orang tidak selalu membayar dengan cara yang sama, ada yang lebih nyaman cash, lebih nyaman e-wallet terutama para anak muda. Dengan penggunaan interface untuk `Metode Pembayaran` sistem dapat dikembangkan sesuai dengan kebiasaan pembayaran masa kini.
 
