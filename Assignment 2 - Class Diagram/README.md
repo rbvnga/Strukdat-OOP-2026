@@ -14,6 +14,8 @@ Berdasarkan peristiwa tersebut, saya mensimulasikan sebuah Sistem Reservasi Lapa
 ## Kode Program
 
 ## Output
+<img width="782" height="796" alt="Cuplikan layar 2026-03-24 173515" src="https://github.com/user-attachments/assets/aa4c75c3-5179-4a8f-aca4-76e649d15c29" /> <br>
+
 
 ## Prinsip-Prinsip OOP
 ### Abstraction
