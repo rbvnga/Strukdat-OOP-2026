@@ -12,6 +12,7 @@ Berdasarkan peristiwa tersebut, saya mensimulasikan sebuah Sistem Reservasi Lapa
 <img width="29000" height="27000" alt="Class Diagram_Reservasi Lapangan" src="https://github.com/user-attachments/assets/2bde9ec6-eb25-4241-abfd-530e58abd288" /> <br>
 
 ## Kode Program
+Berikut adalah kode untuk membuat UML Class Diagram Reservasi Lapangan Olahraga: [ClassDiagram.txt]()
 Berikut adalah kode program Reservasi Lapangan Olahraga: [App.java](https://github.com/rbvnga/Strukdat-OOP-2026/blob/main/Assignment%202%20-%20Class%20Diagram/Assignment2_Reservasi%20Lapangan%20Olahraga/src/App.java) <br>
 ## Output
 <img width="782" height="796" alt="Cuplikan layar 2026-03-24 173515" src="https://github.com/user-attachments/assets/aa4c75c3-5179-4a8f-aca4-76e649d15c29" /> <br>
