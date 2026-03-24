@@ -9,7 +9,7 @@ Setelah masa pandemi COVID-19, aktivitas olahraga kembali menjadi kebiasaan yang
 Berdasarkan peristiwa tersebut, saya mensimulasikan sebuah Sistem Reservasi Lapangan Olahraga yang membantu calon customer menentukan dan melihat informasi penting seperti jenis lapangan olahraga, harga sewa per jam, jadwal penggunaan, status pembayaran, total biaya reservasi beserta metode pembayaranya seperti tunai atau _e-wallet_. Di sisi lain, Admin dapat mengelola data lapangan sehingga informasi yang ditampilkan kepada customer menjadi lebih terstruktur dan mudah dipahami. <br>
 
 ## Class Diagram
-<img width="8192" height="5928" alt="Class Diagram_Reservasi Lapangan" src="https://github.com/user-attachments/assets/2bde9ec6-eb25-4241-abfd-530e58abd288" /> <br>
+<img width="8192" height="6928" alt="Class Diagram_Reservasi Lapangan" src="https://github.com/user-attachments/assets/2bde9ec6-eb25-4241-abfd-530e58abd288" /> <br>
 
 ## Kode Program
 
@@ -50,7 +50,7 @@ interface MetodePembayaran {
 Encapsulation adalah membungkus data dan mengontrol akses terhadap data tersebut, dimana akses data hanya lewat method getter/setter. Contoh penerapannya ialah 
 ``````java
 class Field {
-    private String fieldId;       // tidak bisa diakses langsung dari luar class
+    private String fieldId;      
     private TipeOlahraga namaOlahraga;
     private int hargaPerJam;
     public int getHargaPerJam() { 
@@ -59,7 +59,8 @@ class Field {
 }
 class Pembayaran {
     private String status = "UNPAID"; 
-    public String getStatus() {return status; } // hanya bisa baca
+    public String getStatus() {
+return status; } 
     // tidak ada setStatus() → tidak bisa diubah sembarangan
 }
 ``````
