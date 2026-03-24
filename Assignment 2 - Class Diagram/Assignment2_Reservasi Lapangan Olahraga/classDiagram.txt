@@ -1,0 +1,122 @@
+---
+config:
+  layout: elk
+  theme: redux
+---
+classDiagram
+direction LR
+    class User {
+	    # String userId
+	    # String nama
+	    # String email
+	    + User(userId: String, nama: String, email: String)
+	    + setUserId(userId: String) void
+	    + getUserId() String
+	    + setNama(nama: String) void
+	    + getNama() String
+	    + setEmail(email: String) void
+	    + getEmail() String
+	    + login() void*
+    }
+
+    class Customer {
+	    + Customer(userId : String, nama : String, email : String)
+	    + buatReservasi(reservasiId: String, lapangan: Field, tanggal: String, waktuMulai: String, waktuBerakhir: String, metodePembayaran: MetodePembayaran) Reservasi
+	    + login() void
+    }
+
+    class Admin {
+	    + Admin(userId : String, nama : String, email : String)
+	    + tambahLapangan(lapangan: Field) void
+	    + login() void
+    }
+
+    class TipeOlahraga {
+	    + getNamaOlahraga() String
+    }
+
+    class Badminton {
+	    + getNamaOlahraga() String
+    }
+
+    class Voli {
+	    + getNamaOlahraga() String
+    }
+
+    class Basket {
+	    + getNamaOlahraga() String
+    }
+
+    class Field {
+	    - String fieldId
+	    - TipeOlahraga namaOlahraga
+	    - int hargaPerJam
+	    + Field(fieldId: String, namaOlahraga: TipeOlahraga, hargaPerJam: int)
+	    + getHargaPerJam() int
+	    + getFieldInfo() String
+    }
+
+    class Jadwal {
+	    - String tanggal
+	    - String waktuMulai
+	    - String waktuBerakhir
+	    + Jadwal(tanggal : String, waktuMulai : String, waktuBerakhir : String)
+	    + setTanggal(String tanggal) void
+	    + getTanggal() String
+	    + setWaktuMulai(String waktuMulai) void
+	    + getWaktuMulai() String
+	    + setWaktuBerakhir(String waktuBerakhir) void
+	    + getWaktuBerakhir() String
+	    + hitungDurasiJam() int
+	    + infoJadwal() String
+    }
+
+    class MetodePembayaran {
+	    + bayar(harga: int) void
+    }
+
+    class Tunai {
+	    + bayar(harga: int) void
+    }
+
+    class EWallet {
+	    + bayar(harga: int) void
+    }
+
+    class Pembayaran {
+	    - int harga
+	    - String status
+	    - MetodePembayaran metodePembayaran
+	    + Pembayaran(harga: int, metodePembayaran: MetodePembayaran)
+	    + bayar() void
+	    + getStatus() String
+    }
+
+    class Reservasi {
+	    - String reservasiId
+	    - Customer customer
+	    - Field lapangan
+	    - Jadwal jadwal
+	    - Pembayaran pembayaran
+	    + Reservasi(reservasiId: String, customer : Customer, lapangan: Field, tanggal: String, waktuMulai: String, waktuBerakhir: String, metodePembayaran: MetodePembayaran)
+	    + prosesPembayaran()
+	    + detailReservasi()
+    }
+
+	<<abstract>> User
+	<<interface>> TipeOlahraga
+	<<interface>> MetodePembayaran
+
+    User <|-- Customer : Inheritance
+    User <|-- Admin : Inheritance
+    TipeOlahraga <|.. Badminton : Realization
+    TipeOlahraga <|.. Voli : Realization
+    TipeOlahraga <|.. Basket : Realization
+    Field --> TipeOlahraga : bertipe
+    MetodePembayaran <|.. Tunai : Realization
+    MetodePembayaran <|.. EWallet : Realization
+    Pembayaran --> MetodePembayaran : menggunakan
+    Reservasi *-- Jadwal : Composition
+    Reservasi *-- Pembayaran : Composition
+    Reservasi --> Field : Association
+    Reservasi --> Customer : Milik
