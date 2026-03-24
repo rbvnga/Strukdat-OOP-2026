@@ -37,7 +37,7 @@ class Admin extends User {
     }
 }
 ``````
-Jadi `User` mendefinisikan konsep umum pengguna, `Customer` dan `Admin` mengisi implementasinya. <br>. Contoh lain penerapan Abstraction ialah 
+Jadi `User` mendefinisikan konsep umum pengguna, `Customer` dan `Admin` mengisi implementasinya. Contoh lain penerapan Abstraction ialah 
 ``````java
 interface TipeOlahraga {
     String getNamaOlahraga(); // belum ada implementasi 
@@ -46,7 +46,24 @@ interface MetodePembayaran {
     void bayar(int harga); // belum ada implementasi 
 }
 ``````
-
+###Encapsulation
+Encapsulation adalah membungkus data dan mengontrol akses terhadap data tersebut, dimana akses data hanya lewat method getter/setter. Contoh penerapannya ialah 
+``````java
+class Field {
+    private String fieldId;       // tidak bisa diakses langsung dari luar class
+    private TipeOlahraga namaOlahraga;
+    private int hargaPerJam;
+    public int getHargaPerJam() { 
+        return hargaPerJam;
+    }
+}
+class Pembayaran {
+    private String status = "UNPAID"; 
+    public String getStatus() {return status; } // hanya bisa baca
+    // tidak ada setStatus() → tidak bisa diubah sembarangan
+}
+``````
+Karena `hargaPerJam` dan `status` bersifat `private`, property ini tidak bisa diakses langsung dari luar class, aksesnya harus lewat method getter/setter. <br>
 ### Inheritance 
 Class `User` menjadi _parent class_ yang memiliki atribut umum berupa `userId`, `nama`, dan `email`. Class `Admin` dan `Customer` merupakan turunan dari Class **User**, sehingga keduanya mewarisi atribut dan method yang sama yaitu `login()`. 
 <pre>
