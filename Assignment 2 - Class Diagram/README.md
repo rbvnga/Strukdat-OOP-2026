@@ -9,7 +9,7 @@ Setelah masa pandemi COVID-19, aktivitas olahraga kembali menjadi kebiasaan yang
 Berdasarkan peristiwa tersebut, saya mensimulasikan sebuah Sistem Reservasi Lapangan Olahraga yang membantu calon customer menentukan dan melihat informasi penting seperti jenis lapangan olahraga, harga sewa per jam, jadwal penggunaan, status pembayaran, total biaya reservasi beserta metode pembayaranya seperti tunai atau _e-wallet_. Di sisi lain, Admin dapat mengelola data lapangan sehingga informasi yang ditampilkan kepada customer menjadi lebih terstruktur dan mudah dipahami. <br>
 
 ## Class Diagram
-<img width="19000" height="17000" alt="Class Diagram_Reservasi Lapangan" src="https://github.com/user-attachments/assets/2bde9ec6-eb25-4241-abfd-530e58abd288" /> <br>
+<img width="29000" height="27000" alt="Class Diagram_Reservasi Lapangan" src="https://github.com/user-attachments/assets/2bde9ec6-eb25-4241-abfd-530e58abd288" /> <br>
 
 ## Kode Program
 Berikut adalah kode program Reservasi Lapangan Olahraga: [App.java](https://github.com/rbvnga/Strukdat-OOP-2026/blob/main/Assignment%202%20-%20Class%20Diagram/Assignment2_Reservasi%20Lapangan%20Olahraga/src/App.java) <br>
@@ -166,7 +166,7 @@ class Reservasi {
 ``````
 ### Association 
 Association adalah hubungan antar class dimana satu class mengetahui class lain, tetapi keduanya tetap dapat berdiri sendiri.
-1. Reservasi — Customer
+**1. Reservasi — Customer**
 ``````java
 class Reservasi {
     private Customer customer; // menyimpan referensi Customer
@@ -193,7 +193,7 @@ class Reservasi {
 }
 ``````
 `Reservasi` hanya meminjam referensi `Customer` untuk keperluan menampilkan nama dan email di `detailReservasi()`. Customer dapat membuat banyak reservasi, tetapi Customer tetap dapat ada tanpa reservasi. <br>
-2. Reservasi — Field
+**2. Reservasi — Field**
 ``````java
 class Reservasi {
     private Field lapangan; // menyimpan referensi Field
@@ -207,8 +207,8 @@ admin1.tambahLapangan(lapangan1);
 // Field (lapangan1)  dikirim ke Reservasi:
 Reservasi r1 = c1.buatReservasi("r1", lapangan1, ...);
 ``````
-`Reservasi` menggunakan `Field` digunakan mengambil `hargaPerJam` saat menghitung total biaya, dan menampilkan info lapangan di `detailReservasi()`. `Field` tetap hidup meski Reservasi dihapus. <br>
-5. Field — TipeOlahraga
+`Reservasi` menggunakan `Field` digunakan mengambil `hargaPerJam` saat menghitung total biaya, dan menampilkan info lapangan di `detailReservasi()`. `Field` tetap hidup meski `Reservasi` dihapus. <br>
+**3. Field — TipeOlahraga**
 ``````java
 class Field {
     private TipeOlahraga namaOlahraga; // menyimpan referensi TipeOlahraga
@@ -221,7 +221,7 @@ TipeOlahraga badminton = new Badminton();
 Field lapangan1 = new Field("F01", badminton, 50000); // TipeOlahraga (badminton) dikirim ke Field
 ``````
 `Field` menggunakannya hanya untuk memanggil `getNamaOlahraga()` di method `getFieldInfo()`. <br>
-4. Pembayaran — MetodePembayaran
+**4. Pembayaran — MetodePembayaran**
 `````java
 class Pembayaran {
     private MetodePembayaran metodePembayaran; // menyimpan referensi MetodePembayaran
