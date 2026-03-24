@@ -30,9 +30,23 @@ class Customer extends User {
         System.out.println("(Customer) " + nama + " Login");
     }
 }
+class Admin extends User {
+    @Override
+    public void login() {
+        System.out.println("(Admin) " + nama + " Login");
+    }
+}
 ``````
-Pengguna Car cukup tahu bahwa setiap mobil bisa startEngine() — tidak perlu tahu cara tiap jenis mobil menyalakan mesinnya.
-Class Car hanya mengatakan bahwa setiap mobil harus punya method startEngine(), tetapi cara menyalakan mesin tidak dijelaskan di Car.
+Jadi `User` mendefinisikan konsep umum pengguna, `Customer` dan `Admin` mengisi implementasinya. <br>. Contoh lain penerapan Abstraction ialah 
+``````java
+interface TipeOlahraga {
+    String getNamaOlahraga(); // belum ada implementasi 
+}
+interface MetodePembayaran {
+    void bayar(int harga); // belum ada implementasi 
+}
+``````
+
 ### Inheritance 
 Class `User` menjadi _parent class_ yang memiliki atribut umum berupa `userId`, `nama`, dan `email`. Class `Admin` dan `Customer` merupakan turunan dari Class **User**, sehingga keduanya mewarisi atribut dan method yang sama yaitu `login()`. 
 <pre>
