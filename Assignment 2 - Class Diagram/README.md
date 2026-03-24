@@ -102,7 +102,7 @@ Lalu di `Costumer` dan `Admin` di-override menjadi:
 ``````
  - Polymorphism pada interface Metode Pembayaran
    Interface MetodePembayaran memiliki beberapa implementasi yaitu Tunai dan EWallet.
-Saat `metodePembayaran.bayar(harga) dipanggil`, Java otomatis menjalankan versi yang benar berdasarkan objek aslinya 
+Saat `metodePembayaran.bayar(harga)` dipanggil, Java otomatis menjalankan versi yang benar berdasarkan objek aslinya 
  - Polymorphism pada interface Tipe Olahraga
 Interface `TipeOlahraga` memungkinkan sistem mendukung berbagai jenis olahraga tanpa mengubah class `Field`. `Basket`, `Badminton`, dan `Voli` dapat memanggil method yang sama yaitu `getNamaOlahraga()` dengan isi kode yang berbeda.
 ``````java
@@ -149,10 +149,10 @@ class EWallet implements MetodePembayaran {
 ``````
 ### Composition
 Composition terjadi ketika suatu class memiliki object lain yang dibuat di dalam class tersebut, sehingga siklus hidupnya bergantung pada class utama. Pada sistem ini:
-- class Reservasi memiliki Jadwal
-- class Reservasi memiliki Pembayaran
-Object Jadwal dan Pembayaran dibuat di dalam constructor Reservasi. <br>
-Jika Reservasi dihapus, maka Jadwal dan Pembayaran juga ikut hilang.
+- class `Reservasi` memiliki `Jadwal`
+- class `Reservasi` memiliki `Pembayaran`
+Object `Jadwal` dan `Pembayaran` dibuat di dalam constructor `Reservasi`. <br>
+Jika Reservasi dihapus, maka `Jadwal` dan `Pembayaran` juga ikut hilang.
 ``````java
 class Reservasi {
     private Jadwal jadwal;         // Reservasi PUNYA Jadwal
@@ -166,9 +166,93 @@ class Reservasi {
 ``````
 ### Association 
 Association adalah hubungan antar class dimana satu class mengetahui class lain, tetapi keduanya tetap dapat berdiri sendiri.
+1. Reservasi — Customer
+``````java
+class Reservasi {
+    private Customer customer; // menyimpan referensi Customer
+}
+``````
+`Reservasi` mengenal `Customer`, tapi tidak membuatnya. `Customer` sudah dibuat di `main()`, lalu dikirim masuk ke `Reservasi` lewat parameter:
+``````java
+// di main():
+Customer c1 = new Customer("C01", "Budi", "budiRizz@mail.com");
+// lalu dikirim ke Reservasi:
+Reservasi r1 = c1.buatReservasi("r1", lapangan1, "10-01-2026", "10:00", "12:00", bayarEWallet);
+``````
+Di dalam `buatReservasi()`, **Customer** dikirim sebagai `this` 
+``````java
+class Customer extends User {
+    public Reservasi buatReservasi(String reservasiId, Field lapangan, String tanggal, String waktuMulai, String waktuBerakhir, MetodePembayaran metodePembayaran) {
+        Reservasi reservasi = new Reservasi(reservasiId, this, // object customer
+                lapangan, tanggal, waktuMulai, waktuBerakhir, metodePembayaran);
+        return reservasi;
+    }
+}
+class Reservasi {
+    public Reservasi(String reservasiId, Customer customer, Field lapangan, String tanggal, String waktuMulai, String waktuBerakhir, MetodePembayaran metodePembayaran) {...}
+}
+``````
+`Reservasi` hanya meminjam referensi `Customer` untuk keperluan menampilkan nama dan email di `detailReservasi()`. Customer dapat membuat banyak reservasi, tetapi Customer tetap dapat ada tanpa reservasi.
+2. Reservasi — Field
+``````java
+class Reservasi {
+    private Field lapangan; // menyimpan referensi Field
+}
+``````
+``````java
+// di main():
+Field lapangan1 = new Field("F01", badminton, 50000); // Field lahir duluan
+admin1.tambahLapangan(lapangan1);
+
+// Field (lapangan1)  dikirim ke Reservasi:
+Reservasi r1 = c1.buatReservasi("r1", lapangan1, ...);
+``````
+`Reservasi` menggunakan `Field` digunakan mengambil `hargaPerJam` saat menghitung total biaya, dan menampilkan info lapangan di `detailReservasi()`. `Field` tetap hidup meski Reservasi dihapus.
+4. Field — TipeOlahraga
+``````java
+class Field {
+    private TipeOlahraga namaOlahraga; // menyimpan referensi TipeOlahraga
+}
+``````
+`TipeOlahraga` adalah interface, dan objek konkretnya (`Badminton`, `Basket`, `Voli`) dibuat duluan di `main()` lalu dikirim ke `Field`:
+``````java
+// di main():
+TipeOlahraga badminton = new Badminton(); 
+Field lapangan1 = new Field("F01", badminton, 50000); // TipeOlahraga (badminton) dikirim ke Field
+``````
+`Field` menggunakannya hanya untuk memanggil `getNamaOlahraga()` di method `getFieldInfo()`.
+5. Pembayaran — MetodePembayaran
+`````java
+class Pembayaran {
+    private MetodePembayaran metodePembayaran; // menyimpan referensi MetodePembayaran
+}
+``````
+`MetodePembayaran` adalah interface, objek konkretnya dibuat di `main()` lalu diteruskan masuk melewati beberapa layer:
+``````java
+// di main():
+MetodePembayaran bayarEWallet = new EWallet(); 
+// dikirim ke buatReservasi() → ke konstruktor Reservasi → ke konstruktor Pembayaran:
+c1.buatReservasi("r1", lapangan1, "10-01-2026", "10:00", "12:00", bayarEWallet);
+``````
+saat `prosesPembayaran` di panggil di `main()`, objek `pembayaran` akan memanggil method `bayar()`. Saat method `pembayaran.bayar()` dipanggil, dia mendelegasikan ke `metodePembayaran.bayar(harga)`, tanpa peduli apakah itu `EWallet` atau `Tunai`
+
 ## Keunikan
-1. oca
-2. ads
+1. Menggunakan Composition pada Jadwal dan Pembayaran
+Class Reservasi langsung membuat object Jadwal dan Pembayaran di dalam constructor, sehingga struktur data reservasi menjadi lebih rapi dan terikat kuat. Hal ini memastikan bahwa setiap reservasi pasti memiliki jadwal dan informasi pembayaran.
+2. Perhitungan Otomatis Total Harga Berdasarkan Durasi
+Durasi pemakaian lapangan dihitung otomatis dari waktu mulai dan waktu selesai. Kemudian total harga dihitung menggunakan rumus:
+<pre> total harga = harga per jam × durasi </pre>
+Implementasi pada kode: 
+``````java
+    // hitung durasi sewa lapangan para customer
+    public int hitungDurasiJam() {
+        int mulai = Integer.parseInt(waktuMulai.substring(0, 2));
+        int selesai = Integer.parseInt(waktuBerakhir.substring(0, 2));
+        return selesai - mulai;
+    }
+    int durasi = jadwal.hitungDurasiJam();
+    int totalHarga = lapangan.getHargaPerJam() * durasi; 
+``````
 3. Simulasi Alur di Dunia Nyata
    - Admin menambahkan lapangan
    - Customer memilih lapangan
@@ -176,5 +260,6 @@ Association adalah hubungan antar class dimana satu class mengetahui class lain,
    - Sistem menghitung biaya otomatis
    - Customer melakukan pembayaran
    - Memperbarui status pembayaran 
-5. dwe
-6. M
+4. Fleksibilitas metode pembayaran mencerminkan kebiasaan masyarakat modern
+Di jaman sekarang ini, orang tidak selalu membayar dengan cara yang sama, ada yang lebih nyaman cash, lebih nyaman e-wallet terutama para anak muda. Dengan penggunaan interface untuk `Metode Pembayaran` sistem dapat dikembangkan sesuai dengan kebiasaan pembayaran masa kini.
+
