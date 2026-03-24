@@ -60,7 +60,7 @@ class Field {
 class Pembayaran {
     private String status = "UNPAID"; 
     public String getStatus() {
-return status; } 
+    return status; } 
     // tidak ada setStatus() → tidak bisa diubah sembarangan
 }
 ``````
@@ -71,6 +71,15 @@ Class `User` menjadi _parent class_ yang memiliki atribut umum berupa `userId`, 
 User (parent)
  ├── Admin (child)
  └── Customer (child) </pre>
+``````java
+abstract class User {
+    protected String userId, nama, email; // atribut diwariskan ke subclass
+    abstract void login();                // wajib diimplementasi
+}
+
+class Customer extends User { ... } 
+class Admin extends User { ... }   
+``````
 
  ### Polymorphism
  - Polymorphism pada method abstract
